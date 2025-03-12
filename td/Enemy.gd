@@ -38,6 +38,6 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 	velocity = safe_velocity
 
 # Placeholder function - MUST be overridden by child classes
-func update_sprite_direction(direction: Vector2) -> void:
+func update_sprite_direction(_direction: Vector2) -> void:
 	push_error("Error: update_sprite_direction must be implemented by child class!")
 	pass
