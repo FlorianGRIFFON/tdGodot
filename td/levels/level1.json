@@ -1,0 +1,66 @@
+{
+	"lives": 20,
+	"cash": 1000,
+	"groups": [
+		{
+			"interval": 2,
+			"waves": [
+				{
+					"delay": 2,
+					"spawns": [
+						{
+							"interval": 0.5,
+							"max_same": 0,
+							"fixed_sub_path": 0,
+							"path": 1,
+							"creep": "enemy_bandit",
+							"interval_next": 0,
+							"max": 3
+						},
+						{
+							"interval": 1,
+							"max_same": 0,
+							"fixed_sub_path": 0,
+							"path": 2,
+							"creep": "enemy_viking",
+							"interval_next": 0,
+							"max": 3
+						}
+					]
+				},
+				{
+					"delay": 2,
+					"spawns": [
+						{
+							"interval": 0.5,
+							"max_same": 0,
+							"fixed_sub_path": 0,
+							"path": 1,
+							"creep": "enemy_bandit",
+							"interval_next": 0,
+							"max": 5
+						},
+						{
+							"interval": 1,
+							"max_same": 0,
+							"fixed_sub_path": 0,
+							"path": 2,
+							"creep": "enemy_viking",
+							"interval_next": 5,
+							"max": 3
+						},
+						{
+							"interval": 0.3,
+							"max_same": 0,
+							"fixed_sub_path": 0,
+							"path": 3,
+							"creep": "enemy_goblin",
+							"interval_next": 0,
+							"max": 10
+						}
+					]
+				}
+			]
+		}
+	]
+}

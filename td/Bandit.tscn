@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://ckd1q4v7g7rbe"]
+
+[ext_resource type="PackedScene" uid="uid://b6fxhffyfsd4i" path="res://Enemy.tscn" id="1_2kped"]
+[ext_resource type="Script" path="res://Bandit.gd" id="2_jndkq"]
+
+[node name="Bandit" instance=ExtResource("1_2kped")]
+script = ExtResource("2_jndkq")
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+animation = &"bandit_idle"
+frame_progress = 0.874855

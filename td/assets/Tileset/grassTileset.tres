@@ -1,0 +1,6 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://bg06u8gx4sqqk"]
+
+[ext_resource type="Texture2D" uid="uid://cr3ehqftua1xj" path="res://assets/Tileset/grassTileset.png" id="1_ah2oj"]
+
+[resource]
+atlas = ExtResource("1_ah2oj")
