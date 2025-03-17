@@ -56,8 +56,6 @@ func initialize(data: Dictionary, group_timer_ref: Timer, wave_timer_ref: Timer,
 	wave_timer = wave_timer_ref
 	tilemap = tilemap_ref
 	# Connect signals programmatically
-	group_timer.connect("timeout", Callable(self, "_on_group_timer_timeout"))
-	wave_timer.connect("timeout", Callable(self, "_on_wave_timer_timeout"))
 	start_wave_system()
 
 
@@ -79,7 +77,10 @@ func _on_group_timer_timeout():
 		start_wave_system()
 		return
 	var wave = wave_data["groups"][current_group_idx]["waves"][current_wave_idx]
-	wave_timer.wait_time = wave["delay"]
+	var delay = wave.get("delay", 0.1)  # Default to 0.1s if missing
+	if delay <= 0:
+		delay = 0.1  # Ensure positive value
+	wave_timer.wait_time = delay
 	wave_timer.one_shot = true
 	wave_timer.start()
 	print("Starting wave ", current_wave_idx, " in group ", current_group_idx)
