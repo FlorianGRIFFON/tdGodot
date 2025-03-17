@@ -55,6 +55,9 @@ func initialize(data: Dictionary, group_timer_ref: Timer, wave_timer_ref: Timer,
 	group_timer = group_timer_ref
 	wave_timer = wave_timer_ref
 	tilemap = tilemap_ref
+	# Connect signals programmatically
+	group_timer.connect("timeout", Callable(self, "_on_group_timer_timeout"))
+	wave_timer.connect("timeout", Callable(self, "_on_wave_timer_timeout"))
 	start_wave_system()
 
 
@@ -89,17 +92,35 @@ func _on_wave_timer_timeout():
 		timer.queue_free()
 	spawn_timers.clear()
 	
+	var cumulative_delay = 0.0  # Track total delay from wave start
 	for i in range(wave["spawns"].size()):
 		var spawn = wave["spawns"][i]
 		spawn_counts[i] = 0
-		var timer = Timer.new()
-		timer.wait_time = spawn["interval"]
-		timer.one_shot = false
-		timer.connect("timeout", Callable(self, "_spawn_enemy").bind(i))
-		add_child(timer)
-		spawn_timers[i] = timer
-		timer.start()
-		print("Started spawn ", i, ": ", spawn["creep"], " on path ", spawn["path"])
+		var spawn_timer = Timer.new()
+		spawn_timer.wait_time = spawn["interval"]
+		spawn_timer.one_shot = false
+		spawn_timer.connect("timeout", Callable(self, "_spawn_enemy").bind(i))
+		add_child(spawn_timer)
+		spawn_timers[i] = spawn_timer
+		
+		# Apply delay if cumulative_delay > 0
+		if cumulative_delay > 0:
+			var delay_timer = Timer.new()
+			delay_timer.wait_time = cumulative_delay
+			delay_timer.one_shot = true
+			delay_timer.connect("timeout", Callable(self, "_start_spawn_timer").bind(spawn_timer, i, spawn["creep"], spawn["path"]))
+			add_child(delay_timer)
+			delay_timer.start()
+		else:
+			_start_spawn_timer(spawn_timer, i, spawn["creep"], spawn["path"])
+		
+		# Add this spawn's interval_next to the cumulative delay for the next spawn
+		cumulative_delay += spawn["interval_next"]
+
+
+func _start_spawn_timer(timer: Timer, spawn_idx: int, creep: String, path: int):
+	timer.start()
+	print("Started spawn ", spawn_idx, ": ", creep, " on path ", path)
 
 
 func _spawn_enemy(spawn_idx: int):
@@ -126,20 +147,21 @@ func _spawn_enemy(spawn_idx: int):
 			var end_pos = tilemap.map_to_local(path_ends[path_idx]) * 0.25
 			var nav_layer = nav_layers[nav_idx]
 			if spawn_counts[spawn_idx] < spawn["max"]:
-				get_parent().add_child(enemy_instance)  # Add to Level1 for enemy_reached_end
+				get_parent().add_child(enemy_instance)
 				enemy_instance.initialize(start_pos, end_pos, nav_layer)
 				spawn_counts[spawn_idx] += 1
 				print("Spawned ", creep_name, " (", spawn_counts[spawn_idx], "/", spawn["max"], ") on path ", path_idx, " nav_idx ", nav_idx, " at ", start_pos)
 			if spawn_counts[spawn_idx] >= spawn["max"]:
 				spawn_timers[spawn_idx].stop()
+				spawn_timers[spawn_idx].queue_free()
+				spawn_timers.erase(spawn_idx)
+				# Check if all spawns are done
 				var all_done = true
 				for idx in spawn_counts.keys():
 					if spawn_counts[idx] < wave["spawns"][idx]["max"]:
 						all_done = false
 						break
 				if all_done:
-					for timer in spawn_timers.values():
-						timer.stop()
 					print("Wave ", current_wave_idx, " completed!")
 					current_wave_idx += 1
 					group_timer.start()
