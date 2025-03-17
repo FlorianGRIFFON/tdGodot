@@ -1,8 +1,10 @@
-[gd_scene load_steps=39 format=4 uid="uid://d286k6wc1tcs7"]
+[gd_scene load_steps=41 format=4 uid="uid://d286k6wc1tcs7"]
 
-[ext_resource type="Script" path="res://Level_one.gd" id="1_4vv0q"]
-[ext_resource type="Texture2D" uid="uid://bg06u8gx4sqqk" path="res://assets/Tileset/grassTileset.tres" id="2_ilgx6"]
-[ext_resource type="Texture2D" uid="uid://db7mfqbpxnwah" path="res://assets/Tileset/roadsTileset.tres" id="3_j43p2"]
+[ext_resource type="Script" path="res://Level.gd" id="1_pe4tm"]
+[ext_resource type="Script" path="res://WaveManager.gd" id="2_si6qb"]
+[ext_resource type="Script" path="res://CameraController.gd" id="2_xrkfm"]
+[ext_resource type="Texture2D" uid="uid://bg06u8gx4sqqk" path="res://assets/Tileset/grassTileset.tres" id="3_q51cp"]
+[ext_resource type="Texture2D" uid="uid://db7mfqbpxnwah" path="res://assets/Tileset/roadsTileset.tres" id="4_tko63"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_j7l37"]
 tile_data = PackedInt32Array(0, 65537, 0, 65536, 65537, 1, 131072, 65537, 2)
@@ -67,7 +69,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-32, -32, 32, -32, 32, 
 agent_radius = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eyypu"]
-texture = ExtResource("2_ilgx6")
+texture = ExtResource("3_q51cp")
 texture_region_size = Vector2i(64, 64)
 2:1/0 = 0
 5:1/0 = 0
@@ -261,7 +263,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-32, -32, 32, -32, 32, 
 agent_radius = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_odoko"]
-texture = ExtResource("3_j43p2")
+texture = ExtResource("4_tko63")
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
 0:0/0/modulate = Color(1, 0, 0, 1)
@@ -338,11 +340,12 @@ pattern_15 = SubResource("TileMapPattern_6lr44")
 pattern_16 = SubResource("TileMapPattern_fd82t")
 pattern_17 = SubResource("TileMapPattern_3hy8e")
 
-[node name="level_one" type="Node2D"]
-script = ExtResource("1_4vv0q")
+[node name="Level" type="Node2D"]
+script = ExtResource("1_pe4tm")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(320, 180)
+script = ExtResource("2_xrkfm")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 scale = Vector2(0.25, 0.25)
@@ -357,5 +360,8 @@ tile_set = SubResource("TileSet_dn5qw")
 
 [node name="GroupTimer" type="Timer" parent="."]
 
-[connection signal="timeout" from="WaveTimer" to="." method="_on_wave_timer_timeout"]
-[connection signal="timeout" from="GroupTimer" to="." method="_on_group_timer_timeout"]
+[node name="WaveManager" type="Node2D" parent="."]
+script = ExtResource("2_si6qb")
+
+[connection signal="timeout" from="WaveTimer" to="WaveManager" method="_on_wave_timer_timeout"]
+[connection signal="timeout" from="GroupTimer" to="WaveManager" method="_on_group_timer_timeout"]
