@@ -8,13 +8,12 @@ enum TargetType { SINGLE, AOE, SPECIAL }
 var fire_rate: float = 1.0
 var min_atk: int = 5
 var max_atk: int = 10
-var build_cost: int = 100
 var tower_range: float = 150.0
 var upgrade_costs: Array = [150, 200, 300, 300]
 var projectile_speed: float = 300.0
 var target_type: TargetType = TargetType.SINGLE
 var tower_id: String = "Generic"
-var total_spent: int = 0
+var total_spent: int = 0  # Kept for selling
 
 # Runtime variables
 var upgrade_level: int = 0
@@ -26,19 +25,18 @@ var is_building: bool = true
 @onready var fire_timer = $FireTimer
 @onready var base_sprite = $BaseSprite
 @onready var weapon_sprite = $WeaponSprite
-@onready var dust_sprite = $DustSprite  # New dust/shadow sprite
+@onready var dust_sprite = $DustSprite
 @onready var projectile_spawn = $ProjectileSpawnPoint
 
 func _ready():
-	total_spent = build_cost
 	range_area.get_node("CollisionShape2D").shape.radius = tower_range
 	fire_timer.wait_time = fire_rate
-	
-	# Hide tower initially
 	base_sprite.visible = false
 	weapon_sprite.visible = false
 	_play_construction()
 
+func set_build_cost(cost: int):
+	total_spent = cost  # Set initial cost from Level.gd
 
 func _play_construction():
 	if upgrade_level == 0 || upgrade_level == 1:
@@ -46,28 +44,25 @@ func _play_construction():
 	else:
 		base_sprite.play("tower_construct2")
 	
-	# Play first frames of construction
 	base_sprite.frame = 0
-	var frame_to_wait = 11
-	if (upgrade_level == 0):
-		frame_to_wait = 6
-		
+	var frame_to_wait = 4
+	if upgrade_level == 0:
+		frame_to_wait = 4
 	await create_tween().tween_property(base_sprite, "frame", frame_to_wait, 0.5).finished
 	base_sprite.visible = true
 	weapon_sprite.visible = true
-	_update_visuals()  # Set level-specific sprites
+	_update_visuals()
 	dust_sprite.visible = true
-	dust_sprite.play("tower_dust")  # Play dust animation
+	dust_sprite.play("tower_dust")
 	await dust_sprite.animation_finished
+	dust_sprite.stop()
 	dust_sprite.visible = false
 	is_building = false
 	_start_firing()
 
-
 func _start_firing():
 	if not is_building:
 		fire_timer.start()
-
 
 func _on_fire_timer_timeout():
 	if not is_building:
@@ -76,7 +71,6 @@ func _on_fire_timer_timeout():
 		else:
 			_find_target()
 
-
 func _find_target():
 	var enemies = range_area.get_overlapping_bodies()
 	if enemies.size() > 0:
@@ -84,7 +78,6 @@ func _find_target():
 		_fire_at_target()
 	else:
 		target = null
-
 
 func _fire_at_target():
 	var scene_name = get_filename_prefix().to_lower()
@@ -104,7 +97,6 @@ func _fire_at_target():
 			var projectile = _create_projectile()
 			get_parent().add_child(projectile)
 
-
 func _create_projectile() -> Node2D:
 	var projectile = preload("res://Projectile.tscn").instantiate()
 	projectile.position = projectile_spawn.global_position
@@ -112,7 +104,6 @@ func _create_projectile() -> Node2D:
 	projectile.speed = projectile_speed
 	projectile.tower = self
 	return projectile
-
 
 func upgrade(next_level: int = -1) -> bool:
 	if upgrade_level >= 2 and next_level == -1:
@@ -129,22 +120,19 @@ func upgrade(next_level: int = -1) -> bool:
 	else:
 		upgrade_level = clamp(next_level, 3, 4)
 	
-	total_spent += cost
+	total_spent += cost  # Add upgrade cost
 	is_building = true
-	_play_construction()  # Re-run construction for upgrade
+	_play_construction()
 	_update_stats()
 	return true
 
-
 func _update_stats():
 	pass
-
 
 func _update_visuals():
 	var scene_name = get_filename_prefix().to_lower()
 	base_sprite.play(scene_name + "_base" + str(upgrade_level))
 	weapon_sprite.play(scene_name + "_weapon" + str(upgrade_level))
-
 
 func get_filename_prefix() -> String:
 	var scene_path = get_scene_file_path()
@@ -154,22 +142,18 @@ func get_filename_prefix() -> String:
 	var file_name = scene_path.get_file().get_basename()
 	return file_name
 
-
 func get_cost() -> int:
 	return upgrade_costs[upgrade_level] if upgrade_level < upgrade_costs.size() else -1
 
-
 func sell() -> int:
-	var sell_value = int(total_spent * 0.75)
+	var sell_value = int(total_spent * 0.75)  # 75% of total spent
 	queue_free()
 	return sell_value
-
 
 func _on_range_area_body_entered(body):
 	if not target and not is_building:
 		target = body
 		_fire_at_target()
-
 
 func _on_range_area_body_exited(body):
 	if body == target:

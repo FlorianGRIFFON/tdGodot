@@ -6,14 +6,18 @@ func _ready():
 	fire_rate = 0.8
 	min_atk = 8
 	max_atk = 12
-	build_cost = 120
 	tower_range = 200.0
 	upgrade_costs = [180, 250, 350, 400]
 	projectile_speed = 400.0
 	target_type = TargetType.SINGLE
 	_update_stats()
 	_update_visuals()
-	super._ready()
+	# Explicitly call base setup
+	range_area.get_node("CollisionShape2D").shape.radius = tower_range
+	fire_timer.wait_time = fire_rate
+	base_sprite.visible = false
+	weapon_sprite.visible = false
+	_play_construction()
 
 func _update_stats():
 	match upgrade_level:

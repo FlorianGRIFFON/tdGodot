@@ -586,7 +586,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_h3258")
 }],
-"loop": true,
+"loop": false,
 "name": &"tower_dust",
 "speed": 10.0
 }]

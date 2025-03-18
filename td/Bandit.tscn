@@ -7,5 +7,4 @@
 script = ExtResource("2_jndkq")
 
 [node name="AnimatedSprite2D" parent="." index="0"]
-animation = &"bandit_idle"
-frame_progress = 0.874855
+animation = &"goblin_idle"
