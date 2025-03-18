@@ -1,7 +1,6 @@
-# Level.gd
+# Level.gd (or Level1.gd)
 extends Node2D
 
-# Wave data
 var wave_data: Dictionary
 var lives: int = 20
 var cash: int = 1000
@@ -15,8 +14,8 @@ var selected_tower: PackedScene = null
 
 func _ready():
 	load_wave_data("res://levels/level1.json")
-	wave_manager.initialize(wave_data, group_timer, wave_timer, tilemap)  # Pass timers and tilemap
-	camera.initialize(tilemap)  # Pass tilemap to camera
+	wave_manager.initialize(wave_data, group_timer, wave_timer, tilemap)
+	camera.initialize(tilemap)
 
 func _input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
@@ -62,10 +61,12 @@ func load_wave_data(path: String):
 	else:
 		push_error("Failed to load wave data from: " + path)
 
-
 func enemy_reached_end(enemy: Enemy) -> void:
-	lives -= int(enemy.penalty)  # Reduce lives by enemy's penalty value
+	lives -= int(enemy.penalty)
 	print("Enemy reached end! Lives remaining: ", lives)
 	if lives <= 0:
 		print("Game Over! No lives remaining.")
-		# Add game over logic here (e.g., pause, show UI)
+
+func add_cash(amount: float) -> void:
+	cash += int(amount)
+	print("Gained ", amount, " cash. Total: ", cash)

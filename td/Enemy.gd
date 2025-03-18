@@ -92,3 +92,16 @@ func reached_end() -> void:
 	# Notify Level1 to reduce lives and despawn
 	get_parent().enemy_reached_end(self)  # Call method in Level1.gd
 	queue_free()  # Despawn the enemy
+
+func take_damage(damage: float) -> void:
+	hp -= damage * (def / 100)  # Apply physical defense
+	if hp <= 0:
+		die()
+	else:
+		print(damage, " damage, HP left: ", hp)
+
+
+func die() -> void:
+	get_parent().add_cash(bounty)  # Add bounty to Level.gd cash
+	queue_free()
+	print("died, granting ", bounty, " cash")
