@@ -3,7 +3,9 @@ extends Node2D
 
 # Wave data
 var wave_data: Dictionary
-var lives: int = 20  # Player lives, set by JSON
+var lives: int = 20
+var cash: int = 1000
+var selected_tower: PackedScene = null
 
 @onready var tilemap = $TileMapLayer
 @onready var wave_manager = $WaveManager
@@ -16,6 +18,38 @@ func _ready():
 	wave_manager.initialize(wave_data, group_timer, wave_timer, tilemap)  # Pass timers and tilemap
 	camera.initialize(tilemap)  # Pass tilemap to camera
 
+func _input(event):
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if selected_tower:
+			var tower = selected_tower.instantiate()
+			if cash >= tower.build_cost:
+				cash -= tower.build_cost
+				tower.position = get_global_mouse_position()
+				add_child(tower)
+				print("Placed ", tower.tower_id, " for ", tower.build_cost, ". Cash: ", cash)
+				selected_tower = null
+			else:
+				print("Not enough cash!")
+				tower.queue_free()
+
+func buy_tower(tower_scene: PackedScene):
+	selected_tower = tower_scene
+
+func upgrade_tower(tower: Tower, next_level: int = -1):
+	var cost = tower.get_cost()
+	if cost > 0 and cash >= cost:
+		if tower.upgrade(next_level):
+			cash -= cost
+			print("Upgraded ", tower.tower_id, " to level ", tower.upgrade_level, " for ", cost, ". Cash: ", cash)
+		else:
+			print("Upgrade failed (invalid path or max level)!")
+	else:
+		print("Not enough cash! Need ", cost, ", have ", cash)
+
+func sell_tower(tower: Tower):
+	var sell_value = tower.sell()
+	cash += sell_value
+	print("Sold ", tower.tower_id, " for ", sell_value, ". Cash: ", cash)
 
 func load_wave_data(path: String):
 	var file = FileAccess.open(path, FileAccess.READ)
