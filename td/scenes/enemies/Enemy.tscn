@@ -1,6 +1,6 @@
 [gd_scene load_steps=59 format=3 uid="uid://b6fxhffyfsd4i"]
 
-[ext_resource type="Script" path="res://Enemy.gd" id="1_vjjwf"]
+[ext_resource type="Script" path="res://scripts/enemies/Enemy.gd" id="1_vjjwf"]
 [ext_resource type="Texture2D" uid="uid://bm4h0qlw62g3e" path="res://assets/Enemies/Characters fullsheet.png" id="2_ftewo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g7fxb"]
@@ -469,6 +469,7 @@ script = ExtResource("1_vjjwf")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_e0eax")
 animation = &"bandit_walk_left"
+frame_progress = 0.216893
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_3nuax")
@@ -478,7 +479,6 @@ path_desired_distance = 5.0
 target_desired_distance = 5.0
 navigation_layers = 7
 path_postprocessing = 1
-debug_enabled = true
 debug_use_custom = true
 debug_path_custom_color = Color(1, 0, 0, 1)
 

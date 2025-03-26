@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://c10cpkb681anv"]
+
+[ext_resource type="Script" path="res://scripts/towers/TowerPlot.gd" id="1_0ghgu"]
+[ext_resource type="Texture2D" uid="uid://735drqiigo67" path="res://assets/Tileset/towerPlot.png" id="2_88nra"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_58qeq"]
+size = Vector2(58, 34)
+
+[node name="TowerPlot" type="Area2D" groups=["tower_plots"]]
+script = ExtResource("1_0ghgu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 14)
+shape = SubResource("RectangleShape2D_58qeq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_88nra")

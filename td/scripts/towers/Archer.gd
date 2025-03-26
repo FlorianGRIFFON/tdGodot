@@ -7,7 +7,7 @@ func _ready():
 	min_atk = 8
 	max_atk = 12
 	tower_range = 200.0
-	upgrade_costs = [180, 250, 350, 400]
+	upgrade_costs = [110, 160, 250, 250]
 	projectile_speed = 400.0
 	target_type = TargetType.SINGLE
 	_update_stats()
@@ -47,7 +47,7 @@ func _update_stats():
 	range_area.get_node("CollisionShape2D").shape.radius = tower_range
 
 func _create_projectile() -> Node2D:
-	var projectile = preload("res://ArcherProjectile.tscn").instantiate()
+	var projectile = preload("res://scenes/projectiles/ArcherProjectile.tscn").instantiate()
 	projectile.position = projectile_spawn.global_position
 	projectile.target = target
 	projectile.speed = projectile_speed

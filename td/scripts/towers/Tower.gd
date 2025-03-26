@@ -2,6 +2,8 @@
 extends Node2D
 class_name Tower
 
+signal tower_clicked(tower)
+
 enum TargetType { SINGLE, AOE, SPECIAL }
 
 # Stats
@@ -39,6 +41,7 @@ func set_build_cost(cost: int):
 	total_spent = cost  # Set initial cost from Level.gd
 
 func _play_construction():
+	weapon_sprite.visible = false
 	if upgrade_level == 0 || upgrade_level == 1:
 		base_sprite.play("tower_construct" + str(upgrade_level))
 	else:
@@ -98,7 +101,7 @@ func _fire_at_target():
 			get_parent().add_child(projectile)
 
 func _create_projectile() -> Node2D:
-	var projectile = preload("res://Projectile.tscn").instantiate()
+	var projectile = preload("res://scenes/projectiles/Projectile.tscn").instantiate()
 	projectile.position = projectile_spawn.global_position
 	projectile.target = target
 	projectile.speed = projectile_speed
@@ -159,3 +162,9 @@ func _on_range_area_body_exited(body):
 	if body == target:
 		target = null
 		_find_target()
+
+func _on_click_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if not is_building:  # Assuming you have this check
+			print("Tower clicked signal emitted from: ", tower_id)
+			emit_signal("tower_clicked", self)

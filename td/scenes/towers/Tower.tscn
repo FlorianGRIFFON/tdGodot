@@ -1,6 +1,6 @@
-[gd_scene load_steps=83 format=3 uid="uid://obp15darplw2"]
+[gd_scene load_steps=84 format=3 uid="uid://obp15darplw2"]
 
-[ext_resource type="Script" path="res://Tower.gd" id="1_e08k1"]
+[ext_resource type="Script" path="res://scripts/towers/Tower.gd" id="1_e08k1"]
 [ext_resource type="Texture2D" uid="uid://dbukhlap126ja" path="res://assets/Towers/TowerBase/Tower 01.png" id="2_03213"]
 [ext_resource type="Texture2D" uid="uid://dr3irjr0eqrym" path="res://assets/Towers/Effects/Tower Construction.png" id="2_xem42"]
 [ext_resource type="Texture2D" uid="uid://c463kx5g5s54k" path="res://assets/Towers/TowerBase/Tower 07.png" id="3_li56q"]
@@ -594,12 +594,16 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_bmvt0"]
 radius = 100.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4j08p"]
+size = Vector2(65, 65)
+
 [node name="Tower" type="Node2D"]
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_e08k1")
 
 [node name="BaseSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_5gny3")
-animation = &"archer_base0"
+animation = &"tower_construct0"
 
 [node name="WeaponSprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -10)
@@ -622,6 +626,14 @@ shape = SubResource("CircleShape2D_bmvt0")
 
 [node name="ProjectileSpawnPoint" type="Node2D" parent="."]
 
+[node name="ClickArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickArea"]
+position = Vector2(-0.5, 32.5)
+shape = SubResource("RectangleShape2D_4j08p")
+debug_color = Color(0.96677, 0, 0.478458, 0.42)
+
 [connection signal="body_entered" from="RangeArea" to="." method="_on_range_area_body_entered"]
 [connection signal="body_exited" from="RangeArea" to="." method="_on_range_area_body_exited"]
 [connection signal="timeout" from="FireTimer" to="." method="_on_fire_timer_timeout"]
+[connection signal="input_event" from="ClickArea" to="." method="_on_click_area_input_event"]

@@ -1,10 +1,13 @@
-[gd_scene load_steps=41 format=4 uid="uid://d286k6wc1tcs7"]
+[gd_scene load_steps=44 format=4 uid="uid://d286k6wc1tcs7"]
 
-[ext_resource type="Script" path="res://Level.gd" id="1_pe4tm"]
-[ext_resource type="Script" path="res://WaveManager.gd" id="2_si6qb"]
-[ext_resource type="Script" path="res://CameraController.gd" id="2_xrkfm"]
+[ext_resource type="Script" path="res://scripts/levels/Level.gd" id="1_pe4tm"]
+[ext_resource type="Script" path="res://scripts/levels/WaveManager.gd" id="2_si6qb"]
+[ext_resource type="Script" path="res://scripts/levels/CameraController.gd" id="2_xrkfm"]
 [ext_resource type="Texture2D" uid="uid://bg06u8gx4sqqk" path="res://assets/Tileset/grassTileset.tres" id="3_q51cp"]
 [ext_resource type="Texture2D" uid="uid://db7mfqbpxnwah" path="res://assets/Tileset/roadsTileset.tres" id="4_tko63"]
+[ext_resource type="PackedScene" uid="uid://bi53o8daqfrlp" path="res://scenes/ui/TowerSelectionUI.tscn" id="6_bprbe"]
+[ext_resource type="PackedScene" uid="uid://cm84qklaikra" path="res://scenes/ui/TowerActionUI.tscn" id="7_rsfif"]
+[ext_resource type="PackedScene" uid="uid://c10cpkb681anv" path="res://scenes/towers/TowerPlot.tscn" id="8_3mt7c"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_j7l37"]
 tile_data = PackedInt32Array(0, 65537, 0, 65536, 65537, 1, 131072, 65537, 2)
@@ -362,6 +365,22 @@ tile_set = SubResource("TileSet_dn5qw")
 
 [node name="WaveManager" type="Node2D" parent="."]
 script = ExtResource("2_si6qb")
+
+[node name="TowerPlot" parent="." instance=ExtResource("8_3mt7c")]
+position = Vector2(388, 209)
+
+[node name="TowerPlot2" parent="." instance=ExtResource("8_3mt7c")]
+position = Vector2(387, 156)
+
+[node name="TowerSelectionUI" parent="." instance=ExtResource("6_bprbe")]
+visible = false
+offset_left = 137.0
+offset_top = 75.0
+offset_right = 249.0
+offset_bottom = 213.0
+
+[node name="TowerActionUI" parent="." instance=ExtResource("7_rsfif")]
+visible = false
 
 [connection signal="timeout" from="WaveTimer" to="WaveManager" method="_on_wave_timer_timeout"]
 [connection signal="timeout" from="GroupTimer" to="WaveManager" method="_on_group_timer_timeout"]

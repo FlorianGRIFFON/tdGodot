@@ -1,6 +1,6 @@
 [gd_scene load_steps=28 format=3 uid="uid://dswi20g0x1cow"]
 
-[ext_resource type="Script" path="res://Projectile.gd" id="1_bst7f"]
+[ext_resource type="Script" path="res://scripts/projectiles/Projectile.gd" id="1_bst7f"]
 [ext_resource type="Texture2D" uid="uid://jvckntujkiu2" path="res://assets/Towers/Projectiles/Tower 01 - Level 01 - Projectile.png" id="2_glp4n"]
 [ext_resource type="Texture2D" uid="uid://dlmldcjkwh3rh" path="res://assets/Towers/Projectiles/Tower 01 - Level 02 - Projectile.png" id="3_jagur"]
 [ext_resource type="Texture2D" uid="uid://c4avys4mi5trw" path="res://assets/Towers/Projectiles/Tower 01 - Level 03 - Projectile.png" id="4_mnt8l"]

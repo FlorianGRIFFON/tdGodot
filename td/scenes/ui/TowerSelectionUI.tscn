@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=3 uid="uid://bi53o8daqfrlp"]
+
+[ext_resource type="Script" path="res://scripts/ui/TowerSelectionUI.gd" id="1_ovrlv"]
+
+[node name="TowerSelectionUI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_ovrlv")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 112.0
+offset_bottom = 137.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 44.0
+
+[node name="ArcherButton" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Archer - 70"
+
+[node name="BarackButton" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Baracks - 70"
+
+[node name="ArtilleryButton" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Artillery - 120"
+
+[node name="MageButton" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Mage - 90"

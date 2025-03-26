@@ -3,9 +3,9 @@ extends Node2D
 
 # Enemy scene references (map creep names to scenes)
 var enemy_scenes = {
-	"enemy_goblin": preload("res://Goblin.tscn"),
-	"enemy_bandit": preload("res://Bandit.tscn"),
-	"enemy_viking": preload("res://Viking.tscn")
+	"enemy_goblin": preload("res://scenes/enemies/Goblin.tscn"),
+	"enemy_bandit": preload("res://scenes/enemies/Bandit.tscn"),
+	"enemy_viking": preload("res://scenes/enemies/Viking.tscn")
 }
 
 # Start and end positions

@@ -29,7 +29,7 @@ func initialize(start_pos: Vector2, end_pos: Vector2, nav_layer: int) -> void:
 	navigation_ready = true
 	nav.target_position = end_pos
 	nav.set_navigation_layers(nav_layer)  # Apply the passed navigation layer
-	print("Enemy initialized at ", position, " heading to ", end_pos, " with nav layer: ", nav_layer)
+	#print("Enemy initialized at ", position, " heading to ", end_pos, " with nav layer: ", nav_layer)
 
 
 func _physics_process(_delta: float) -> void:
@@ -79,7 +79,7 @@ func update_sprite_direction(direction: Vector2) -> void:
 
 
 func get_filename_prefix() -> String:
-	# Extract the base name from the scene file (e.g., "Goblin" from "res://Goblin.tscn")
+	# Extract the base name from the scene file (e.g., "Goblin" from "res://scenes/enemies/Goblin.tscn")
 	var scene_path = get_scene_file_path()
 	if scene_path.is_empty():
 		push_warning("Enemy has no scene file path, using node name: " + name)
