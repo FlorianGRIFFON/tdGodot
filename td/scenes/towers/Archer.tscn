@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bg40y6pckg6b6"]
 
 [ext_resource type="PackedScene" uid="uid://obp15darplw2" path="res://scenes/towers/Tower.tscn" id="1_rv4cs"]
-[ext_resource type="Script" path="res://scripts/towers/Archer.gd" id="2_lw8ok"]
+[ext_resource type="Script" uid="uid://dljms7gmv474a" path="res://scripts/towers/Archer.gd" id="2_lw8ok"]
 
 [node name="Archer" instance=ExtResource("1_rv4cs")]
 script = ExtResource("2_lw8ok")
@@ -10,5 +10,6 @@ script = ExtResource("2_lw8ok")
 frame_progress = 0.476396
 
 [node name="WeaponSprite" parent="." index="1"]
-animation = &"archer_weapon4"
-frame_progress = 0.635562
+animation = &"archer_fire2"
+frame = 0
+frame_progress = 0.0

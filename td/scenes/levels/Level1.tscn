@@ -1,8 +1,8 @@
 [gd_scene load_steps=44 format=4 uid="uid://d286k6wc1tcs7"]
 
-[ext_resource type="Script" path="res://scripts/levels/Level.gd" id="1_pe4tm"]
-[ext_resource type="Script" path="res://scripts/levels/WaveManager.gd" id="2_si6qb"]
-[ext_resource type="Script" path="res://scripts/levels/CameraController.gd" id="2_xrkfm"]
+[ext_resource type="Script" uid="uid://b8762bpmol74e" path="res://scripts/levels/Level.gd" id="1_pe4tm"]
+[ext_resource type="Script" uid="uid://bnxcnjo21elx4" path="res://scripts/levels/WaveManager.gd" id="2_si6qb"]
+[ext_resource type="Script" uid="uid://c4sk7p4u8l62n" path="res://scripts/levels/CameraController.gd" id="2_xrkfm"]
 [ext_resource type="Texture2D" uid="uid://bg06u8gx4sqqk" path="res://assets/Tileset/grassTileset.tres" id="3_q51cp"]
 [ext_resource type="Texture2D" uid="uid://db7mfqbpxnwah" path="res://assets/Tileset/roadsTileset.tres" id="4_tko63"]
 [ext_resource type="PackedScene" uid="uid://bi53o8daqfrlp" path="res://scenes/ui/TowerSelectionUI.tscn" id="6_bprbe"]
@@ -371,6 +371,15 @@ position = Vector2(388, 209)
 
 [node name="TowerPlot2" parent="." instance=ExtResource("8_3mt7c")]
 position = Vector2(387, 156)
+
+[node name="TowerPlot3" parent="." instance=ExtResource("8_3mt7c")]
+position = Vector2(242, 322)
+
+[node name="TowerPlot5" parent="." instance=ExtResource("8_3mt7c")]
+position = Vector2(353, 318)
+
+[node name="TowerPlot4" parent="." instance=ExtResource("8_3mt7c")]
+position = Vector2(207, 147)
 
 [node name="TowerSelectionUI" parent="." instance=ExtResource("6_bprbe")]
 visible = false

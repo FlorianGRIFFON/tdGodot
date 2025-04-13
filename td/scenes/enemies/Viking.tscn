@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://desu6pu0y64no"]
 
-[ext_resource type="PackedScene" uid="uid://b6fxhffyfsd4i" path="res://scripts/enemies/Enemy.tscn" id="1_cosos"]
-[ext_resource type="Script" path="res://scripts/enemies/Viking.gd" id="2_wna07"]
+[ext_resource type="PackedScene" uid="uid://b6fxhffyfsd4i" path="res://scenes/enemies/Enemy.tscn" id="1_cosos"]
+[ext_resource type="Script" uid="uid://c5vv1j0x37rxp" path="res://scripts/enemies/Viking.gd" id="2_wna07"]
 
 [node name="Viking" instance=ExtResource("1_cosos")]
 script = ExtResource("2_wna07")

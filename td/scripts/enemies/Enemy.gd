@@ -94,14 +94,10 @@ func reached_end() -> void:
 	queue_free()  # Despawn the enemy
 
 func take_damage(damage: float) -> void:
-	hp -= damage * (def / 100)  # Apply physical defense
+	hp -= damage * (100 - def ) / 100  # Apply physical defense
 	if hp <= 0:
 		die()
-	else:
-		print(damage, " damage, HP left: ", hp)
-
 
 func die() -> void:
 	get_parent().add_cash(bounty)  # Add bounty to Level.gd cash
 	queue_free()
-	print("died, granting ", bounty, " cash")

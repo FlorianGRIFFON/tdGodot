@@ -1,7 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://bvr14rr5vgvhd"]
 
 [ext_resource type="PackedScene" uid="uid://dswi20g0x1cow" path="res://scenes/projectiles/Projectile.tscn" id="1_sd7xc"]
-[ext_resource type="Script" path="res://scripts/projectiles/ArcherProjectile.gd" id="2_arsps"]
+[ext_resource type="Script" uid="uid://2osad1l1ibui" path="res://scripts/projectiles/ArcherProjectile.gd" id="2_arsps"]
 
 [node name="ArcherProjectile" instance=ExtResource("1_sd7xc")]
+scale = Vector2(0.25, 0.25)
 script = ExtResource("2_arsps")
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+animation = &"archer_projectile0"

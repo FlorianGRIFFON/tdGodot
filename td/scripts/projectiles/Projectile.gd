@@ -1,8 +1,7 @@
-# Projectile.gd
 extends Node2D
 class_name Projectile
 
-var speed: float = 300.0
+var speed: float = 100.0
 var target: Node2D = null
 var tower: Tower = null
 var upgrade_level: int = 0
@@ -13,12 +12,13 @@ func _ready():
 	if not sprite:
 		push_warning("Projectile missing AnimatedSprite2D node!")
 	else:
-		sprite.play("default")  # Play default animation if set
+		sprite.play("default")
 
 func _process(delta):
 	if target and is_instance_valid(target):
 		var direction = (target.global_position - global_position).normalized()
 		global_position += direction * speed * delta
+		sprite.rotation = direction.angle() + PI / 2
 		if global_position.distance_to(target.global_position) < 5:
 			_apply_effect()
 			queue_free()

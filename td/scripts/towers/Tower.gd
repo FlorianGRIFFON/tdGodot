@@ -84,23 +84,47 @@ func _find_target():
 
 func _fire_at_target():
 	var scene_name = get_filename_prefix().to_lower()
-	weapon_sprite.play(scene_name + "_fire" + str(upgrade_level))
-	await weapon_sprite.animation_finished
-	match target_type:
-		TargetType.SINGLE:
-			var projectile = _create_projectile()
-			get_parent().add_child(projectile)
-		TargetType.AOE:
-			var enemies = range_area.get_overlapping_bodies()
-			var damage = randi_range(min_atk, max_atk)
-			for enemy in enemies:
-				if enemy and is_instance_valid(enemy):
-					enemy.take_damage(damage)
-		TargetType.SPECIAL:
-			var projectile = _create_projectile()
-			get_parent().add_child(projectile)
+	var anim_name = scene_name + "_fire" + str(upgrade_level)
+	if target and is_instance_valid(target) and not target.is_queued_for_deletion():
+		var direction = (target.global_position - global_position).normalized()
+		weapon_sprite.rotation = direction.angle() + PI / 2
+		# Get frame count dynamically
+		var frame_count = weapon_sprite.sprite_frames.get_frame_count(anim_name) if weapon_sprite.sprite_frames.has_animation(anim_name) else 1
+		if frame_count <= 0:
+			frame_count = 1  # Avoid division by zero
+		# Assume release is at 60% of frames (adjustable)
+		var release_frame = max(1, round(frame_count * 1))  # E.g., frame 3 for 5 frames
+		# Scale animation speed
+		weapon_sprite.speed_scale = frame_count / fire_rate  # E.g., 7 frames, fire_rate=0.8 → 8.75 FPS
+		weapon_sprite.play(anim_name)
+		# Spawn projectile at release frame
+		var spawn_time = fire_rate * release_frame / frame_count
+		await get_tree().create_timer(spawn_time).timeout
+		weapon_sprite.speed_scale = 1.0
+		weapon_sprite.play(scene_name + "_weapon" + str(upgrade_level))
+		if target and is_instance_valid(target) and not target.is_queued_for_deletion():
+			match target_type:
+				TargetType.SINGLE:
+					var projectile = _create_projectile()
+					if projectile:
+						get_parent().add_child(projectile)
+				TargetType.AOE:
+					var enemies = range_area.get_overlapping_bodies()
+					var damage = randi_range(min_atk, max_atk)
+					for enemy in enemies:
+						if enemy and is_instance_valid(enemy):
+							enemy.take_damage(damage)
+				TargetType.SPECIAL:
+					var projectile = _create_projectile()
+					if projectile:
+						get_parent().add_child(projectile)
+	else:
+		print("No valid target to fire at")
 
 func _create_projectile() -> Node2D:
+	if not target or not is_instance_valid(target):
+		print("Cannot create projectile: invalid target")
+		return null
 	var projectile = preload("res://scenes/projectiles/Projectile.tscn").instantiate()
 	projectile.position = projectile_spawn.global_position
 	projectile.target = target

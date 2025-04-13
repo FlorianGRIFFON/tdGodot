@@ -1,6 +1,6 @@
 [gd_scene load_steps=59 format=3 uid="uid://b6fxhffyfsd4i"]
 
-[ext_resource type="Script" path="res://scripts/enemies/Enemy.gd" id="1_vjjwf"]
+[ext_resource type="Script" uid="uid://rr1nvou2rela" path="res://scripts/enemies/Enemy.gd" id="1_vjjwf"]
 [ext_resource type="Texture2D" uid="uid://bm4h0qlw62g3e" path="res://assets/Enemies/Characters fullsheet.png" id="2_ftewo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g7fxb"]

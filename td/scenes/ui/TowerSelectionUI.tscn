@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bi53o8daqfrlp"]
 
-[ext_resource type="Script" path="res://scripts/ui/TowerSelectionUI.gd" id="1_ovrlv"]
+[ext_resource type="Script" uid="uid://cmgmxiivb0bst" path="res://scripts/ui/TowerSelectionUI.gd" id="1_ovrlv"]
 
 [node name="TowerSelectionUI" type="Control"]
 layout_mode = 3

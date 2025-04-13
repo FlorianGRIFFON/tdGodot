@@ -1,0 +1,25 @@
+{
+	"lives": 20,
+	"cash": 10000,
+	"groups": [
+		{
+			"interval": 5,
+			"waves": [
+				{
+					"delay": 0,
+					"spawns": [
+						{
+							"interval": 1,
+							"max_same": 0,
+							"fixed_sub_path": 0,
+							"path": 2,
+							"creep": "enemy_viking",
+							"interval_next": 0,
+							"max": 1
+						}
+					]
+				}
+			]
+		}
+	]
+}

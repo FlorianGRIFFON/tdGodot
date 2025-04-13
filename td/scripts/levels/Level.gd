@@ -106,3 +106,6 @@ func enemy_reached_end(enemy: Enemy) -> void:
 	print("Enemy reached end! Lives remaining: ", lives)
 	if lives <= 0:
 		print("Game Over! No lives remaining.")
+
+func add_cash(cashToAdd: int):
+	cash += cashToAdd
