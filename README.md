@@ -60,6 +60,8 @@ The latest version of the game can be found on the [GitHub repository](your-gith
 2. Open the project in Godot Engine (4.x recommended).
 3. Run the game from the editor.
 
+---
+
 ## 🤝 Contributions
 
 This project is a personal learning endeavor, but suggestions and feedback are welcome! Feel free to open an issue or submit a pull request.
